@@ -103,24 +103,66 @@ class BookService:
         self,
         pagination: PaginationParams,
         search: Optional[str] = None,
+        author: Optional[str] = None,
+        publisher: Optional[str] = None,
+        tags: Optional[list[str]] = None,
+        min_pages: Optional[int] = None,
+        max_pages: Optional[int] = None,
+        sort_by: str = "created_at",
+        order: str = "desc",
     ) -> tuple[list[BookList], PaginationMeta]:
-        """List books with pagination and optional search.
+        """List books with advanced filtering and pagination.
 
         Args:
             pagination: Pagination parameters (page, limit)
             search: Optional search query for title/author
+            author: Optional author filter (case-insensitive)
+            publisher: Optional publisher filter (case-insensitive)
+            tags: Optional list of tags (match any tag)
+            min_pages: Optional minimum page count
+            max_pages: Optional maximum page count
+            sort_by: Field to sort by (created_at, title, author, pages)
+            order: Sort order (asc, desc)
 
         Returns:
             Tuple of (books, pagination_meta)
         """
-        # Build filter query
         filter_query = {}
 
+        # Text search
         if search:
             filter_query["$or"] = [
                 {"title": {"$regex": search, "$options": "i"}},
                 {"author": {"$regex": search, "$options": "i"}},
             ]
+
+        # Author filter
+        if author:
+            filter_query["author"] = {"$regex": author, "$options": "i"}
+
+        # Publisher filter
+        if publisher:
+            filter_query["publisher"] = {"$regex": publisher, "$options": "i"}
+
+        # Tags filter (match any)
+        if tags:
+            filter_query["tags"] = {"$in": tags}
+
+        # Page range filter
+        if min_pages is not None or max_pages is not None:
+            pages_query = {}
+            if min_pages is not None:
+                pages_query["$gte"] = min_pages
+            if max_pages is not None:
+                pages_query["$lte"] = max_pages
+            filter_query["pages"] = pages_query
+
+        # Validate sort_by field
+        valid_sort_fields = {"created_at", "title", "author", "pages", "updated_at"}
+        sort_field = sort_by if sort_by in valid_sort_fields else "created_at"
+
+        # Validate order
+        sort_direction = -1 if order.lower() == "desc" else 1
 
         # Get total count
         total = await self.collection.count_documents(filter_query)
@@ -128,7 +170,7 @@ class BookService:
         # Execute paginated query
         cursor = (
             self.collection.find(filter_query)
-            .sort("created_at", -1)
+            .sort(sort_field, sort_direction)
             .skip(pagination.skip)
             .limit(pagination.limit)
         )
@@ -153,7 +195,9 @@ class BookService:
 
         self.logger.info(
             f"Listed books: page={pagination.page}, limit={pagination.limit}, "
-            f"total={total}, search={search}"
+            f"total={total}, filters=[search={search}, author={author}, "
+            f"publisher={publisher}, tags={tags}, pages={min_pages}-{max_pages}], "
+            f"sort_by={sort_field}, order={order}"
         )
 
         return books, pagination_meta
@@ -268,6 +312,127 @@ class BookService:
         """
         count = await self.collection.count_documents({})
         return count
+
+    async def full_text_search(
+        self,
+        query: str,
+        pagination: PaginationParams,
+    ) -> tuple[list[BookList], PaginationMeta]:
+        """Full-text search across title, author, and publisher.
+
+        Args:
+            query: Search query string
+            pagination: Pagination parameters
+
+        Returns:
+            Tuple of (books, pagination_meta)
+        """
+        filter_query = {
+            "$or": [
+                {"title": {"$regex": query, "$options": "i"}},
+                {"author": {"$regex": query, "$options": "i"}},
+                {"publisher": {"$regex": query, "$options": "i"}},
+            ]
+        }
+
+        total = await self.collection.count_documents(filter_query)
+
+        cursor = (
+            self.collection.find(filter_query)
+            .sort("created_at", -1)
+            .skip(pagination.skip)
+            .limit(pagination.limit)
+        )
+
+        books_data = await cursor.to_list(length=pagination.limit)
+
+        books = [
+            BookList(
+                id=str(book["_id"]),
+                **{k: v for k, v in book.items() if k != "_id"},
+            )
+            for book in books_data
+        ]
+
+        pagination_meta = create_pagination_meta(
+            page=pagination.page,
+            limit=pagination.limit,
+            total=total,
+        )
+
+        self.logger.info(f"Full-text search: query={query}, found={total}")
+
+        return books, pagination_meta
+
+    async def get_stats(self) -> dict:
+        """Get book statistics including aggregations.
+
+        Returns:
+            Dictionary with:
+            - total_books: Total book count
+            - avg_pages: Average pages
+            - min_pages: Minimum pages
+            - max_pages: Maximum pages
+            - books_by_tag: Count of books per tag
+            - most_common_publisher: Publisher with most books
+        """
+        # Get total count
+        total = await self.collection.count_documents({})
+
+        # Aggregation pipeline for statistics
+        pipeline = [
+            {
+                "$group": {
+                    "_id": None,
+                    "avg_pages": {"$avg": "$pages"},
+                    "min_pages": {"$min": "$pages"},
+                    "max_pages": {"$max": "$pages"},
+                }
+            }
+        ]
+
+        stats_data = await self.collection.aggregate(pipeline).to_list(length=1)
+        stats = stats_data[0] if stats_data else {
+            "avg_pages": 0,
+            "min_pages": 0,
+            "max_pages": 0,
+        }
+
+        # Books by tag
+        tag_pipeline = [
+            {"$unwind": "$tags"},
+            {"$group": {"_id": "$tag", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+        ]
+
+        tags_data = await self.collection.aggregate(tag_pipeline).to_list(length=None)
+        books_by_tag = {tag["_id"]: tag["count"] for tag in tags_data} if tags_data else {}
+
+        # Most common publisher
+        publisher_pipeline = [
+            {"$group": {"_id": "$publisher", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 1},
+        ]
+
+        publisher_data = await self.collection.aggregate(
+            publisher_pipeline
+        ).to_list(length=1)
+
+        most_common_publisher = (
+            publisher_data[0]["_id"] if publisher_data else "N/A"
+        )
+
+        self.logger.info(f"Generated book statistics: total={total}")
+
+        return {
+            "total_books": total,
+            "avg_pages": round(stats.get("avg_pages", 0), 2),
+            "min_pages": stats.get("min_pages", 0),
+            "max_pages": stats.get("max_pages", 0),
+            "books_by_tag": books_by_tag,
+            "most_common_publisher": most_common_publisher,
+        }
 
     async def get_books_by_author(
         self,

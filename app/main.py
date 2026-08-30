@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.config import get_settings
+from app.middleware import RequestLoggingMiddleware, RateLimitMiddleware
 from app.models.database import close_db, init_db
 from app.routers import authors, books, publishers
 
@@ -94,6 +95,12 @@ def create_app() -> FastAPI:
         docs_url="/docs",
         redoc_url="/redoc",
     )
+
+    # Rate limiting middleware (100 requests/minute per IP)
+    app.add_middleware(RateLimitMiddleware, requests_per_minute=100)
+
+    # Request/response logging middleware
+    app.add_middleware(RequestLoggingMiddleware)
 
     # CORS middleware
     app.add_middleware(

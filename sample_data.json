@@ -1,0 +1,83 @@
+{
+  "books": [
+    {
+      "title": "1984",
+      "author": "George Orwell",
+      "pages": 328,
+      "publisher": "Penguin Books",
+      "tags": ["fiction", "dystopian", "classic", "political"]
+    },
+    {
+      "title": "Brave New World",
+      "author": "Aldous Huxley",
+      "pages": 288,
+      "publisher": "Chatto & Windus",
+      "tags": ["fiction", "dystopian", "classic", "science-fiction"]
+    },
+    {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "pages": 180,
+      "publisher": "Scribner",
+      "tags": ["fiction", "classic", "american-literature", "romance"]
+    },
+    {
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "pages": 281,
+      "publisher": "J. B. Lippincott",
+      "tags": ["fiction", "classic", "american-literature", "drama"]
+    },
+    {
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "pages": 279,
+      "publisher": "T. Egerton",
+      "tags": ["fiction", "classic", "romance", "british-literature"]
+    }
+  ],
+  "authors": [
+    {
+      "name": "George Orwell",
+      "country": "United Kingdom"
+    },
+    {
+      "name": "Aldous Huxley",
+      "country": "United Kingdom"
+    },
+    {
+      "name": "F. Scott Fitzgerald",
+      "country": "United States"
+    },
+    {
+      "name": "Harper Lee",
+      "country": "United States"
+    },
+    {
+      "name": "Jane Austen",
+      "country": "United Kingdom"
+    }
+  ],
+  "publishers": [
+    {
+      "name": "Penguin Books",
+      "country": "United Kingdom"
+    },
+    {
+      "name": "Chatto & Windus",
+      "country": "United Kingdom"
+    },
+    {
+      "name": "Scribner",
+      "country": "United States"
+    },
+    {
+      "name": "J. B. Lippincott",
+      "country": "United States"
+    },
+    {
+      "name": "T. Egerton",
+      "country": "United Kingdom"
+    }
+  ]
+}

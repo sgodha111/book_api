@@ -1,0 +1,38 @@
+# Terraform Variables Example
+# Copy this file to terraform.tfvars and fill in the values
+
+# AWS region for deployment
+aws_region = "us-east-1"
+
+# Application name (used for resource naming)
+app_name = "books-api"
+
+# Environment (development, staging, production)
+environment = "production"
+
+# ECR image URI - Replace with your actual image
+# Format: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/books-api:latest
+ecr_image_uri = "123456789012.dkr.ecr.us-east-1.amazonaws.com/books-api:latest"
+
+# DocumentDB Configuration
+db_username = "admin"
+db_password = "ChangeThisPassword123!"  # Must be 8+ chars with uppercase, lowercase, numbers
+
+# ECS Task Configuration
+ecs_task_cpu    = 256      # 256, 512, 1024, 2048, 4096
+ecs_task_memory = 512      # Valid ECS Fargate memory options
+
+# ECS Service Configuration
+ecs_desired_count = 2      # Number of tasks to run
+ecs_min_capacity  = 2      # Minimum for auto-scaling
+ecs_max_capacity  = 10     # Maximum for auto-scaling
+
+# Database Configuration
+db_backup_retention = 7    # Days to retain backups (1-35)
+
+# Additional tags
+tags = {
+  Project    = "books-api"
+  CostCenter = "engineering"
+  Owner      = "your-team"
+}

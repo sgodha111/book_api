@@ -25,29 +25,62 @@ async def list_books(
     page: int = 1,
     limit: int = 10,
     search: Optional[str] = None,
+    author: Optional[str] = None,
+    publisher: Optional[str] = None,
+    tags: Optional[str] = None,
+    min_pages: Optional[int] = None,
+    max_pages: Optional[int] = None,
+    sort_by: str = "created_at",
+    order: str = "desc",
     service: BookService = Depends(get_book_service),
 ) -> dict:
-    """List all books with pagination and optional search.
+    """List all books with advanced filtering and pagination.
 
     Query Parameters:
     - page: Page number (1-indexed), default: 1
     - limit: Items per page (1-100), default: 10
     - search: Optional search query for title/author
+    - author: Optional author filter (case-insensitive)
+    - publisher: Optional publisher filter (case-insensitive)
+    - tags: Optional comma-separated tags (match any tag)
+    - min_pages: Optional minimum page count
+    - max_pages: Optional maximum page count
+    - sort_by: Field to sort by (created_at, title, author, pages, updated_at), default: created_at
+    - order: Sort order (asc, desc), default: desc
 
     Returns:
     - List of books with pagination metadata
     - Status: 200 OK
 
-    Example:
+    Examples:
     ```
-    GET /api/v1/books?page=1&limit=10&search=orwell
+    GET /api/v1/books?page=1&limit=10
+    GET /api/v1/books?author=Orwell&sort_by=pages&order=desc
+    GET /api/v1/books?tags=fiction,dystopian&min_pages=100&max_pages=500
+    GET /api/v1/books?publisher=Penguin&sort_by=title&order=asc
     ```
     """
     pagination = PaginationParams(page=page, limit=limit)
 
-    books, pagination_meta = await service.list_books(pagination, search=search)
+    # Parse tags from comma-separated string
+    tags_list = [t.strip() for t in tags.split(",")] if tags else None
 
-    logger.info(f"Listed books: page={page}, limit={limit}, search={search}")
+    books, pagination_meta = await service.list_books(
+        pagination=pagination,
+        search=search,
+        author=author,
+        publisher=publisher,
+        tags=tags_list,
+        min_pages=min_pages,
+        max_pages=max_pages,
+        sort_by=sort_by,
+        order=order,
+    )
+
+    logger.info(
+        f"Listed books: page={page}, limit={limit}, "
+        f"filters=[search={search}, author={author}, publisher={publisher}, tags={tags_list}]"
+    )
 
     return {
         "data": books,
@@ -189,15 +222,15 @@ async def delete_book(
     status_code=status.HTTP_200_OK,
 )
 async def search_books(
-    query: str,
+    q: str,
     page: int = 1,
     limit: int = 10,
     service: BookService = Depends(get_book_service),
 ) -> dict:
-    """Search books by title, author, or tags.
+    """Full-text search across title, author, and publisher.
 
     Query Parameters:
-    - query: Search query (required)
+    - q: Search query (required)
     - page: Page number (1-indexed), default: 1
     - limit: Items per page (1-100), default: 10
 
@@ -207,19 +240,45 @@ async def search_books(
 
     Example:
     ```
-    GET /api/v1/books/search?query=orwell&page=1&limit=10
+    GET /api/v1/books/search?q=1984&page=1&limit=10
+    GET /api/v1/books/search?q=Penguin
     ```
     """
     pagination = PaginationParams(page=page, limit=limit)
 
-    books, pagination_meta = await service.search_books(query, pagination)
+    books, pagination_meta = await service.full_text_search(q, pagination)
 
-    logger.info(f"Searched books: query={query}, found={pagination_meta.total}")
+    logger.info(f"Full-text searched books: query={q}, found={pagination_meta.total}")
 
     return {
         "data": books,
         "pagination": pagination_meta,
     }
+
+
+@router.get("/stats", response_model=dict, status_code=status.HTTP_200_OK)
+async def get_book_stats(
+    service: BookService = Depends(get_book_service),
+) -> dict:
+    """Get comprehensive book statistics.
+
+    Returns:
+    - total_books: Total number of books
+    - avg_pages: Average pages per book
+    - min_pages: Minimum pages in collection
+    - max_pages: Maximum pages in collection
+    - books_by_tag: Count of books per tag
+    - most_common_publisher: Publisher with most books
+    - Status: 200 OK
+
+    Example:
+    ```
+    GET /api/v1/books/stats
+    ```
+    """
+    stats = await service.get_stats()
+    logger.info(f"Retrieved book statistics: {stats}")
+    return stats
 
 
 @router.get(
@@ -304,21 +363,3 @@ async def get_books_by_publisher(
     }
 
 
-@router.get("/stats/count", response_model=dict, status_code=status.HTTP_200_OK)
-async def get_book_count(
-    service: BookService = Depends(get_book_service),
-) -> dict:
-    """Get total number of books.
-
-    Returns:
-    - Total book count
-    - Status: 200 OK
-
-    Example:
-    ```
-    GET /api/v1/books/stats/count
-    ```
-    """
-    count = await service.count_books()
-    logger.info(f"Total books: {count}")
-    return {"total": count}
