@@ -1,0 +1,451 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0 -- /Users/shubhamgodha/Documents/Github Repos/Antonia/Assginement Code/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/shubhamgodha/Documents/Github Repos/Antonia/Assginement Code
+configfile: pytest.ini (WARNING: ignoring pytest config in pyproject.toml!)
+plugins: asyncio-1.4.0, anyio-4.14.2
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 63 items
+
+tests/integration/test_aggregations.py::test_list_authors_with_book_counts ERROR [  1%]
+tests/integration/test_aggregations.py::test_get_author_books ERROR      [  3%]
+tests/integration/test_aggregations.py::test_publisher_average_pages ERROR [  4%]
+tests/integration/test_aggregations.py::test_publisher_stats ERROR       [  6%]
+tests/integration/test_aggregations.py::test_publisher_overview ERROR    [  7%]
+tests/integration/test_aggregations.py::test_author_statistics ERROR     [  9%]
+tests/integration/test_aggregations.py::test_top_publishers ERROR        [ 11%]
+tests/integration/test_book_endpoints.py::test_list_books_empty ERROR    [ 12%]
+tests/integration/test_book_endpoints.py::test_create_book_success ERROR [ 14%]
+tests/integration/test_book_endpoints.py::test_create_book_missing_required_field ERROR [ 15%]
+tests/integration/test_book_endpoints.py::test_create_book_invalid_pages ERROR [ 17%]
+tests/integration/test_book_endpoints.py::test_list_books_with_pagination ERROR [ 19%]
+tests/integration/test_book_endpoints.py::test_get_book_not_found ERROR  [ 20%]
+tests/integration/test_book_endpoints.py::test_update_book_partial ERROR [ 22%]
+tests/integration/test_book_endpoints.py::test_delete_book_success ERROR [ 23%]
+tests/integration/test_book_endpoints.py::test_delete_book_not_found ERROR [ 25%]
+tests/integration/test_book_endpoints.py::test_search_books ERROR        [ 26%]
+tests/integration/test_book_endpoints.py::test_book_count_stats ERROR    [ 28%]
+tests/unit/test_book_service.py::TestBookServiceCreate::test_create_book_success PASSED [ 30%]
+tests/unit/test_book_service.py::TestBookServiceCreate::test_create_book_duplicate PASSED [ 31%]
+tests/unit/test_book_service.py::TestBookServiceCreate::test_create_book_validation_error FAILED [ 33%]
+tests/unit/test_book_service.py::TestBookServiceRead::test_get_book_success PASSED [ 34%]
+tests/unit/test_book_service.py::TestBookServiceRead::test_get_book_not_found PASSED [ 36%]
+tests/unit/test_book_service.py::TestBookServiceRead::test_get_book_invalid_id_format PASSED [ 38%]
+tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_success FAILED [ 39%]
+tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_partial PASSED [ 41%]
+tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_not_found PASSED [ 42%]
+tests/unit/test_book_service.py::TestBookServiceDelete::test_delete_book_success PASSED [ 44%]
+tests/unit/test_book_service.py::TestBookServiceDelete::test_delete_book_not_found PASSED [ 46%]
+tests/unit/test_book_service.py::TestBookServiceList::test_list_books_success PASSED [ 47%]
+tests/unit/test_book_service.py::TestBookServiceList::test_list_books_pagination PASSED [ 49%]
+tests/unit/test_book_service.py::TestBookServiceList::test_list_books_with_search FAILED [ 50%]
+tests/unit/test_book_service.py::TestBookServiceList::test_list_books_empty PASSED [ 52%]
+tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_by_title FAILED [ 53%]
+tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_by_author FAILED [ 55%]
+tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_no_results PASSED [ 57%]
+tests/unit/test_book_service.py::TestBookServiceCount::test_count_books PASSED [ 58%]
+tests/unit/test_book_service.py::TestBookServiceCount::test_count_books_empty PASSED [ 60%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_valid_book_create PASSED [ 61%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_missing_required_field_title PASSED [ 63%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_missing_required_field_author PASSED [ 65%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_missing_required_field_pages PASSED [ 66%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_missing_required_field_publisher PASSED [ 68%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_negative_pages PASSED [ 69%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_zero_pages PASSED [ 71%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_empty_title PASSED [ 73%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_empty_author PASSED [ 74%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_empty_publisher PASSED [ 76%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_with_empty_tags PASSED [ 77%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_with_multiple_tags PASSED [ 79%]
+tests/unit/test_schemas.py::TestBookCreateSchema::test_title_too_long FAILED [ 80%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_valid_full_update PASSED [ 82%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_partial_update_title_only PASSED [ 84%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_partial_update_pages_only PASSED [ 85%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_partial_update_multiple_fields PASSED [ 87%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_empty_update PASSED [ 88%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_invalid_pages_in_update PASSED [ 90%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_empty_title_in_update PASSED [ 92%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_update_with_tags PASSED [ 93%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_invalid_pages_zero PASSED [ 95%]
+tests/unit/test_schemas.py::TestBookUpdateSchema::test_all_optional_fields PASSED [ 96%]
+tests/unit/test_schemas.py::TestSchemaConversions::test_pages_as_string_converts_to_int PASSED [ 98%]
+tests/unit/test_schemas.py::TestSchemaConversions::test_tags_as_single_string_not_converted FAILED [100%]
+
+==================================== ERRORS ====================================
+_____________ ERROR at setup of test_list_authors_with_book_counts _____________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+___________________ ERROR at setup of test_get_author_books ____________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+________________ ERROR at setup of test_publisher_average_pages ________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+____________________ ERROR at setup of test_publisher_stats ____________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+__________________ ERROR at setup of test_publisher_overview ___________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+___________________ ERROR at setup of test_author_statistics ___________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+____________________ ERROR at setup of test_top_publishers _____________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+___________________ ERROR at setup of test_list_books_empty ____________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+__________________ ERROR at setup of test_create_book_success __________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+__________ ERROR at setup of test_create_book_missing_required_field ___________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+_______________ ERROR at setup of test_create_book_invalid_pages _______________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+______________ ERROR at setup of test_list_books_with_pagination _______________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+__________________ ERROR at setup of test_get_book_not_found ___________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+__________________ ERROR at setup of test_update_book_partial __________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+__________________ ERROR at setup of test_delete_book_success __________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+_________________ ERROR at setup of test_delete_book_not_found _________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+_____________________ ERROR at setup of test_search_books ______________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+___________________ ERROR at setup of test_book_count_stats ____________________
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:558: in setup
+    return super().setup()
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/conftest.py:39: in client
+    return TestClient(app)
+           ^^^^^^^^^^^^^^^
+venv/lib/python3.12/site-packages/starlette/testclient.py:402: in __init__
+    super().__init__(
+E   TypeError: Client.__init__() got an unexpected keyword argument 'app'
+=================================== FAILURES ===================================
+___________ TestBookServiceCreate.test_create_book_validation_error ____________
+tests/unit/test_book_service.py:48: in test_create_book_validation_error
+    invalid_data = BookCreate(
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for BookCreate
+E   title
+E     String should have at least 1 character [type=string_too_short, input_value='', input_type=str]
+E       For further information visit https://errors.pydantic.dev/2.6/v/string_too_short
+________________ TestBookServiceUpdate.test_update_book_success ________________
+tests/unit/test_book_service.py:111: in test_update_book_success
+    assert updated.updated_at > created.updated_at
+E   AssertionError: assert datetime.datetime(2026, 8, 30, 20, 47, 25, 901000) > datetime.datetime(2026, 8, 30, 20, 47, 25, 901456)
+E    +  where datetime.datetime(2026, 8, 30, 20, 47, 25, 901000) = BookResponse(id='6a9496dda45b0e15e7fca87c', title='Test Book', author='Test Author', pages=350, publisher='Test Publisher', tags=['test', 'fiction'], created_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901000), updated_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901000)).updated_at
+E    +  and   datetime.datetime(2026, 8, 30, 20, 47, 25, 901456) = BookResponse(id='6a9496dda45b0e15e7fca87c', title='Test Book', author='Test Author', pages=300, publisher='Test Publisher', tags=['test', 'fiction'], created_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901456), updated_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901456)).updated_at
+----------------------------- Captured stderr call -----------------------------
+{"timestamp": "2026-08-30 22:47:25,901", "level": "INFO", "logger": "app.services.book_service", "message": "Book created: 6a9496dda45b0e15e7fca87c", "module": "book_service"}
+{"timestamp": "2026-08-30 22:47:25,901", "level": "INFO", "logger": "app.services.book_service", "message": "Book updated: 6a9496dda45b0e15e7fca87c", "module": "book_service"}
+------------------------------ Captured log call -------------------------------
+INFO     app.services.book_service:book_service.py:66 Book created: 6a9496dda45b0e15e7fca87c
+INFO     app.services.book_service:book_service.py:200 Book updated: 6a9496dda45b0e15e7fca87c
+_______________ TestBookServiceList.test_list_books_with_search ________________
+tests/unit/test_book_service.py:212: in test_list_books_with_search
+    assert books[0]["author"] == "George Orwell"
+           ^^^^^^^^^^^^^^^^^^
+E   TypeError: 'BookList' object is not subscriptable
+----------------------------- Captured stderr call -----------------------------
+{"timestamp": "2026-08-30 22:47:25,909", "level": "INFO", "logger": "app.services.book_service", "message": "Listed books: page=1, limit=10, total=1, search=Orwell", "module": "book_service"}
+------------------------------ Captured log call -------------------------------
+INFO     app.services.book_service:book_service.py:154 Listed books: page=1, limit=10, total=1, search=Orwell
+_______________ TestBookServiceSearch.test_search_books_by_title _______________
+tests/unit/test_book_service.py:239: in test_search_books_by_title
+    assert "1984" in books[0]["title"]
+                     ^^^^^^^^^^^^^^^^^
+E   TypeError: 'BookList' object is not subscriptable
+----------------------------- Captured stderr call -----------------------------
+{"timestamp": "2026-08-30 22:47:25,913", "level": "INFO", "logger": "app.services.book_service", "message": "Searching books: query=1984, page=1", "module": "book_service"}
+{"timestamp": "2026-08-30 22:47:25,913", "level": "INFO", "logger": "app.services.book_service", "message": "Listed books: page=1, limit=10, total=1, search=1984", "module": "book_service"}
+------------------------------ Captured log call -------------------------------
+INFO     app.services.book_service:book_service.py:259 Searching books: query=1984, page=1
+INFO     app.services.book_service:book_service.py:154 Listed books: page=1, limit=10, total=1, search=1984
+______________ TestBookServiceSearch.test_search_books_by_author _______________
+tests/unit/test_book_service.py:250: in test_search_books_by_author
+    assert books[0]["author"] == "Aldous Huxley"
+           ^^^^^^^^^^^^^^^^^^
+E   TypeError: 'BookList' object is not subscriptable
+----------------------------- Captured stderr call -----------------------------
+{"timestamp": "2026-08-30 22:47:25,916", "level": "INFO", "logger": "app.services.book_service", "message": "Searching books: query=Huxley, page=1", "module": "book_service"}
+{"timestamp": "2026-08-30 22:47:25,916", "level": "INFO", "logger": "app.services.book_service", "message": "Listed books: page=1, limit=10, total=1, search=Huxley", "module": "book_service"}
+------------------------------ Captured log call -------------------------------
+INFO     app.services.book_service:book_service.py:259 Searching books: query=Huxley, page=1
+INFO     app.services.book_service:book_service.py:154 Listed books: page=1, limit=10, total=1, search=Huxley
+___________________ TestBookCreateSchema.test_title_too_long ___________________
+tests/unit/test_schemas.py:153: in test_title_too_long
+    book = BookCreate(**data)
+           ^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for BookCreate
+E   title
+E     String should have at most 255 characters [type=string_too_long, input_value='aaaaaaaaaaaaaaaaaaaaaaaa...aaaaaaaaaaaaaaaaaaaaaaa', input_type=str]
+E       For further information visit https://errors.pydantic.dev/2.6/v/string_too_long
+________ TestSchemaConversions.test_tags_as_single_string_not_converted ________
+tests/unit/test_schemas.py:271: in test_tags_as_single_string_not_converted
+    book = BookCreate(**data)
+           ^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for BookCreate
+E   tags
+E     Input should be a valid list [type=list_type, input_value='fiction', input_type=str]
+E       For further information visit https://errors.pydantic.dev/2.6/v/list_type
+=============================== warnings summary ===============================
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272
+  /Users/shubhamgodha/Documents/Github Repos/Antonia/Assginement Code/venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:272: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.6/migration/
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+tests/unit/test_book_service.py::TestBookServiceCreate::test_create_book_success
+tests/unit/test_book_service.py::TestBookServiceCreate::test_create_book_duplicate
+tests/unit/test_book_service.py::TestBookServiceRead::test_get_book_success
+tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_success
+tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_partial
+tests/unit/test_book_service.py::TestBookServiceDelete::test_delete_book_success
+  /Users/shubhamgodha/Documents/Github Repos/Antonia/Assginement Code/app/services/book_service.py:56: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_success
+tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_partial
+  /Users/shubhamgodha/Documents/Github Repos/Antonia/Assginement Code/app/services/book_service.py:187: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    update_data["updated_at"] = datetime.utcnow()
+
+tests/unit/test_book_service.py::TestBookServiceList::test_list_books_success
+tests/unit/test_book_service.py::TestBookServiceList::test_list_books_pagination
+tests/unit/test_book_service.py::TestBookServiceList::test_list_books_with_search
+tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_by_title
+tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_by_author
+tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_no_results
+tests/unit/test_book_service.py::TestBookServiceCount::test_count_books
+  /Users/shubhamgodha/Documents/Github Repos/Antonia/Assginement Code/tests/conftest.py:92: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/unit/test_book_service.py::TestBookServiceCreate::test_create_book_validation_error - pydantic_core._pydantic_core.ValidationError: 1 validation error for BookCreate
+title
+  String should have at least 1 character [type=string_too_short, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.6/v/string_too_short
+FAILED tests/unit/test_book_service.py::TestBookServiceUpdate::test_update_book_success - AssertionError: assert datetime.datetime(2026, 8, 30, 20, 47, 25, 901000) > datetime.datetime(2026, 8, 30, 20, 47, 25, 901456)
+ +  where datetime.datetime(2026, 8, 30, 20, 47, 25, 901000) = BookResponse(id='6a9496dda45b0e15e7fca87c', title='Test Book', author='Test Author', pages=350, publisher='Test Publisher', tags=['test', 'fiction'], created_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901000), updated_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901000)).updated_at
+ +  and   datetime.datetime(2026, 8, 30, 20, 47, 25, 901456) = BookResponse(id='6a9496dda45b0e15e7fca87c', title='Test Book', author='Test Author', pages=300, publisher='Test Publisher', tags=['test', 'fiction'], created_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901456), updated_at=datetime.datetime(2026, 8, 30, 20, 47, 25, 901456)).updated_at
+FAILED tests/unit/test_book_service.py::TestBookServiceList::test_list_books_with_search - TypeError: 'BookList' object is not subscriptable
+FAILED tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_by_title - TypeError: 'BookList' object is not subscriptable
+FAILED tests/unit/test_book_service.py::TestBookServiceSearch::test_search_books_by_author - TypeError: 'BookList' object is not subscriptable
+FAILED tests/unit/test_schemas.py::TestBookCreateSchema::test_title_too_long - pydantic_core._pydantic_core.ValidationError: 1 validation error for BookCreate
+title
+  String should have at most 255 characters [type=string_too_long, input_value='aaaaaaaaaaaaaaaaaaaaaaaa...aaaaaaaaaaaaaaaaaaaaaaa', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.6/v/string_too_long
+FAILED tests/unit/test_schemas.py::TestSchemaConversions::test_tags_as_single_string_not_converted - pydantic_core._pydantic_core.ValidationError: 1 validation error for BookCreate
+tags
+  Input should be a valid list [type=list_type, input_value='fiction', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.6/v/list_type
+ERROR tests/integration/test_aggregations.py::test_list_authors_with_book_counts - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_aggregations.py::test_get_author_books - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_aggregations.py::test_publisher_average_pages - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_aggregations.py::test_publisher_stats - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_aggregations.py::test_publisher_overview - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_aggregations.py::test_author_statistics - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_aggregations.py::test_top_publishers - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_list_books_empty - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_create_book_success - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_create_book_missing_required_field - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_create_book_invalid_pages - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_list_books_with_pagination - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_get_book_not_found - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_update_book_partial - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_delete_book_success - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_delete_book_not_found - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_search_books - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+ERROR tests/integration/test_book_endpoints.py::test_book_count_stats - TypeError: Client.__init__() got an unexpected keyword argument 'app'
+============= 7 failed, 38 passed, 24 warnings, 18 errors in 0.35s =============
